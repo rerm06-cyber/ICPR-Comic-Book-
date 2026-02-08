@@ -1,0 +1,8 @@
+{
+  "name": "ICPR 80th Anniversary Comic Generator",
+  "description": "Personalized comic book generator with AI consistency and editing.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "prompt": ""
+}

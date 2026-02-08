@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ICPR 80 Aniversario - Comic Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,700&family=Bangers&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              icpr: {
+                blue: '#1A237E',
+                green: '#8BC34E',
+                magenta: '#E91E63',
+                gold: '#FFD700',
+                ruby: '#DC2626'
+              }
+            },
+            fontFamily: {
+              montserrat: ['Montserrat', 'sans-serif'],
+              opensans: ['Open Sans', 'sans-serif'],
+              playfair: ['Playfair Display', 'serif'],
+              comic: ['Bangers', 'cursive']
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --page-height: min(85vh, 800px);
+        --page-width: calc(var(--page-height) * 0.666);
+      }
+
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        overflow-x: hidden;
+      }
+
+      /* 3D Book Styles */
+      .comic-scene {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        perspective: 3500px;
+        background: radial-gradient(circle at center, #ffffff 0%, #d1d5db 100%);
+      }
+
+      .book {
+        position: relative;
+        width: var(--page-width);
+        height: var(--page-height);
+        transform-style: preserve-3d;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .book.opened { transform: translateX(25%); }
+      @media (min-width: 1000px) {
+          .book.opened { transform: translateX(calc(var(--page-width) / 2)); }
+      }
+
+      .paper {
+        position: absolute;
+        inset: 0;
+        transform-origin: left center;
+        transform-style: preserve-3d;
+        transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+        cursor: pointer;
+      }
+
+      .paper.flipped { transform: rotateY(-180deg); }
+
+      .front, .back {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        background-color: white;
+        transform-style: preserve-3d;
+        box-shadow: inset 0 0 50px rgba(0,0,0,0.05), 0 10px 30px rgba(0,0,0,0.1);
+      }
+
+      .front { padding-left: 4px; border-left: 1px solid rgba(0,0,0,0.1); border-radius: 0 10px 10px 0; }
+      .back { transform: rotateY(180deg); padding-right: 4px; border-right: 1px solid rgba(0,0,0,0.1); border-radius: 10px 0 0 10px; }
+
+      .icpr-btn-primary {
+        background-color: #8BC34E;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        padding: 1rem 2.5rem;
+        border-radius: 9999px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 0px #68923a;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .icpr-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0px #68923a; }
+      .icpr-btn-primary:active { transform: translateY(2px); box-shadow: 0 0px 0px #68923a; }
+
+      .icpr-card {
+        background: white;
+        border-radius: 1.5rem;
+        border: 1px solid rgba(26, 35, 126, 0.1);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        transition: all 0.3s ease;
+      }
+      .icpr-card:hover { transform: translateY(-5px); box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1); }
+
+      @media (max-width: 768px) {
+        :root { 
+             --page-height: min(80vh, 130vw);
+             --page-width: calc(var(--page-height) * 0.666);
+        }
+        .book.opened { transform: translateX(100%); }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "recharts": "https://aistudiocdn.com/recharts@^3.3.0",
+    "jspdf": "https://aistudiocdn.com/jspdf@^3.0.3"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
